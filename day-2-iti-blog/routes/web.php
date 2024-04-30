@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('posts', PostController::class);
+Route::resource('posts', PostController::class)->parameters(['posts' => 'id']);
