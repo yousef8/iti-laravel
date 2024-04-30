@@ -23,11 +23,15 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = '/storage/' . $request->file('image')->store('images', 'public');
+        }
         $post = Post::create($validatedData);
 
-        return to_route('posts.create');
+        return to_route('posts.show', $post->id);
     }
 
     public function show(string $id)
