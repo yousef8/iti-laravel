@@ -3,6 +3,8 @@
 @section('title', 'Posts')
 
 @section('content')
+<a href="{{route('posts.create')}}" class="btn btn-success">+ Add</a>
+
 <table class="table table-striped">
   <thead>
     <tr>
