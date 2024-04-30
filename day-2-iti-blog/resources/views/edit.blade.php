@@ -3,11 +3,12 @@
 @section('title', 'Edit Post')
 
 @section('content')
+<h2 class="mb-3">Edit Post #{{$post->id}}</h2>
 <form action="{{route('posts.update', $post->id)}}" method="POST">
     @csrf
     @method('PUT')
     <div class="form-floating mb-3">
-        <input type="text" value="{{$post->title}}" name="title" class="form-control" id="title" placeholder="name@example.com">
+        <input type="text" value="{{old('title',$post->title)}}" name="title" class="form-control" id="title" placeholder="name@example.com">
         <label for="title">Title</label>
     </div>
     @error('title')
@@ -15,7 +16,7 @@
     @enderror
 
     <div class="form-floating mb-3">
-    <textarea name="body" class="form-control" placeholder="Post Content" id="body" style="height: 100px">{{$post->body}}</textarea>
+    <textarea name="body" class="form-control" placeholder="Post Content" id="body" style="height: 100px">{{old('body', $post->body)}}</textarea>
     <label for="body">Body</label>
     </div>
     @error('body')
