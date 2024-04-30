@@ -23,6 +23,7 @@
       <td>{{$post->body}}</td>
       <td>{{$post->image}}</td>
       <td><x-button route='posts.show' id="{{$post->id}}">View</x-button></td>
+      <td><x-button type='warning' route='posts.edit' id="{{$post->id}}">Edit</x-button></td>
     </tr>
     @endforeach
   </tbody>

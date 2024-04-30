@@ -38,10 +38,21 @@ class PostController extends Controller
 
     public function edit(string $id)
     {
+        $post = Post::findOrFail($id);
+        return view('edit', compact('post'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $post = Post::find($id);
+        $post->update($validatedData);
+
+        return to_route('posts.index');
     }
 
     public function destroy(string $id)
