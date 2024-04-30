@@ -57,5 +57,8 @@ class PostController extends Controller
 
     public function destroy(string $id)
     {
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return to_route('posts.index');
     }
 }
