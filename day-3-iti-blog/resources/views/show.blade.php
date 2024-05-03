@@ -8,6 +8,8 @@
   <div class="card-body">
     <h5 class="card-title">{{$post->title}}</h5>
     <p class="card-text">{{$post->body}}</p>
+    <p class="card-text"><b>Author:</b> {{$post->creator->name}}</p>
+    <p class="card-text"><b>Created At:</b> {{$post->created_at->toDayDateTimeString()}}</p>
     <a href="{{route('posts.edit', $post->id)}}" ><x-button type="warning">Edit</x-button></a>
     <form action="{{route('posts.destroy', $post->id)}}" method="POST">
       @csrf
