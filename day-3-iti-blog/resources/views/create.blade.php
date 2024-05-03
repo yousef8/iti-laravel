@@ -30,6 +30,17 @@
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 
+    <select name="user_id" class="form-select mb-3" id="floatingSelect" aria-label="label select example">
+        <option selected disabled value="">Select Creator</option>
+        @foreach ($users as $user)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+        @endforeach
+    </select>
+    @error('user_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+
+
     <input class="btn btn-primary" type="submit" value="Submit">
 
 </form>
