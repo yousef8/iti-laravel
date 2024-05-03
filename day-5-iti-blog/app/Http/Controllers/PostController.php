@@ -70,6 +70,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        return to_route('posts.index');
+        return $post;
     }
 }
