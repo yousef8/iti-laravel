@@ -31,7 +31,7 @@
       <td><a href="{{route('posts.show', $post->id)}}"><x-button>View</x-button></a></td>
       <td>
       @can('update', $post)
-        <a href="{{route('posts.edit', $post->id)}}"><x-button type='warning'>Edit</x-button></a><
+        <a href="{{route('posts.edit', $post->id)}}"><x-button type='warning'>Edit</x-button></a>
       @else
         Not Authorized
       @endcan

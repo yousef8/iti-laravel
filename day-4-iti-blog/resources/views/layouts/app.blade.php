@@ -39,6 +39,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('posts.deleted') }}">Deleted Posts</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('posts.me') }}">Profile</a>
+                                </li>
                         @endguest
 
                     </ul>

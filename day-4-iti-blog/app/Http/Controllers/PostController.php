@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -20,6 +21,11 @@ class PostController extends Controller
     {
         $posts = Post::all();
         return view("index", compact('posts'));
+    }
+
+    public function userPosts()
+    {
+        return view('profile', ['user' => Auth::user()]);
     }
 
     public function create()
