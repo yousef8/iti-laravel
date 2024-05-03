@@ -10,12 +10,21 @@
     <p class="card-text">{{$post->body}}</p>
     <p class="card-text"><b>Author:</b> {{$post->creator->name}}</p>
     <p class="card-text"><b>Created At:</b> {{$post->created_at->toDayDateTimeString()}}</p>
+    @can('update', $post)
     <a href="{{route('posts.edit', $post->id)}}" ><x-button type="warning">Edit</x-button></a>
+    @else
+    Not Authorized to Edit
+    @endcan
+    @can('delete', $post)
+      
     <form action="{{route('posts.destroy', $post->id)}}" method="POST">
       @csrf
       @method('delete')
     <input type="submit" class="btn btn-danger" value='Delete' onclick="return confirm('Are you sure?')"/>
   </form>
+  @else
+    Not Authorized To Delete
+    @endcan
   </div>
 </div>
 @endsection

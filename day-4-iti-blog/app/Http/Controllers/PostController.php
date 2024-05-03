@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -47,6 +48,7 @@ class PostController extends Controller
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
+        Gate::authorize('update', $post);
         return view('edit', [
             'post' => Post::findOrFail($id),
             'users' => User::all()
@@ -57,6 +59,8 @@ class PostController extends Controller
     {
         $validatedData = $request->validated();
         $post = Post::findOrFail($id);
+
+        Gate::authorize('update', $post);
 
         if ($request->hasFile('image')) {
             $validatedData['image'] = '/storage/' . $request->file('image')->store('images', 'public');
@@ -73,6 +77,7 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
+        Gate::authorize('delete', $post);
         $post->delete();
         return to_route('posts.index');
     }
@@ -86,6 +91,7 @@ class PostController extends Controller
     public function deletePermanent($id)
     {
         $post = Post::withTrashed()->findOrFail($id);
+        Gate::authorize('forceDelete', $post);
         $post->forceDelete();
         return to_route('posts.deleted');
     }
@@ -93,6 +99,7 @@ class PostController extends Controller
     public function restoreDeleted($id)
     {
         $post = Post::onlyTrashed()->findOrFail($id);
+        Gate::authorize('restore', $post);
         $post->restore();
         return to_route('posts.deleted');
     }

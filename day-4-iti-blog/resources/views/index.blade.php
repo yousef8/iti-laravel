@@ -14,7 +14,9 @@
       <th scope="col">Creator</th>
       <th scope="col">Created At</th>
       <th scope="col">Image</th>
-      <th scope="col">Actions</th>
+      <th scope="col">View</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -27,13 +29,23 @@
       <td>{{$post->created_at->toDayDateTimeString()}}</td>
       <td>{{$post->image}}</td>
       <td><a href="{{route('posts.show', $post->id)}}"><x-button>View</x-button></a></td>
-      <td><a href="{{route('posts.edit', $post->id)}}"><x-button type='warning'>Edit</x-button></a></td>
       <td>
-        <form action="{{route('posts.destroy', $post->id)}}" method="POST">
-          @csrf
-          @method('delete')
-        <input type="submit" class="btn btn-danger" value='Delete' onclick="return confirm('Are you sure?')"/>
-      </form>
+      @can('update', $post)
+        <a href="{{route('posts.edit', $post->id)}}"><x-button type='warning'>Edit</x-button></a><
+      @else
+        Not Authorized
+      @endcan
+    </td>
+      <td>
+        @can('delete', $post)
+          <form action="{{route('posts.destroy', $post->id)}}" method="POST">
+            @csrf
+            @method('delete')
+            <input type="submit" class="btn btn-danger" value='Delete' onclick="return confirm('Are you sure?')"/>
+          </form>
+        @else
+          Not Authorized
+        @endcan
       </td>
     </tr>
     @endforeach
