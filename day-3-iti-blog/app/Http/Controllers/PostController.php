@@ -48,18 +48,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id)
     {
-        $validatedData = $request->validate(
-            [
-                'title' => 'required|string|max:255',
-                'body' => 'required|string',
-                'user_id' => 'required|exists:users,id'
-            ],
-            [
-                'user_id.exists' => "This author doesn't exist"
-            ]
-        );
+        $validatedData = $request->validated();
 
         Post::find($id)->update($validatedData);
 
