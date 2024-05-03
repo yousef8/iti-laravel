@@ -31,7 +31,7 @@ class PostController extends Controller
 
         $post = Post::create($validatedData);
 
-        return $post;
+        return response()->json($post)->setStatusCode(201);
     }
 
     /**
@@ -60,7 +60,7 @@ class PostController extends Controller
         }
 
         $post->update($validatedData);
-        return $post;
+        return response()->json($post)->setStatusCode(200);
     }
 
     /**
@@ -70,6 +70,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        return $post;
+        // return $post;
+        return response()->json()->setStatusCode(204);
     }
 }
