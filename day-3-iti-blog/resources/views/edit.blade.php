@@ -4,7 +4,7 @@
 
 @section('content')
 <h2 class="mb-3">Edit Post #{{$post->id}}</h2>
-<form action="{{route('posts.update', $post->id)}}" method="POST">
+<form action="{{route('posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="form-floating mb-3">
@@ -24,8 +24,8 @@
     @enderror
 
     <div class="mb-3">
-    <label for="formFile" name="image" class="form-label">Image</label>
-    <input class="form-control" type="file" id="formFile">
+    <label for="formFile" class="form-label">Image</label>
+    <input class="form-control" name="image" type="file" id="formFile">
     </div>
     @error('image')
         <div class="alert alert-danger">{{ $message }}</div>

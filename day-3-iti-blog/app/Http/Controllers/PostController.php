@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -51,9 +52,17 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id)
     {
         $validatedData = $request->validated();
+        $post = Post::findOrFail($id);
 
-        Post::find($id)->update($validatedData);
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = '/storage/' . $request->file('image')->store('images', 'public');
+        }
 
+        if ($request->hasFile('image') && $post->image) {
+            Storage::disk('public')->delete('images/' . basename($post->image));
+        }
+
+        $post->update($validatedData);
         return to_route('posts.show', $id);
     }
 
