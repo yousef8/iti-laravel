@@ -54,20 +54,28 @@ class PostController extends Controller
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
-        return view('edit', compact('post'));
+        return view('edit', [
+            'post' => Post::findOrFail($id),
+            'users' => User::all()
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'body' => 'required|string',
-        ]);
+        $validatedData = $request->validate(
+            [
+                'title' => 'required|string|max:255',
+                'body' => 'required|string',
+                'user_id' => 'required|exists:users,id'
+            ],
+            [
+                'user_id.exists' => "This author doesn't exist"
+            ]
+        );
 
-        $post = Post::find($id);
-        $post->update($validatedData);
+        Post::find($id)->update($validatedData);
 
-        return to_route('posts.index');
+        return to_route('posts.show', $id);
     }
 
     public function destroy(string $id)

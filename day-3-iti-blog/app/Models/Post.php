@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'body', 'image'];
+    protected $fillable = ['title', 'body', 'image', 'user_id'];
     protected static function boot()
     {
         parent::boot();
