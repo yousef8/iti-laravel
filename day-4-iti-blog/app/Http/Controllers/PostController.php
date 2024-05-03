@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Jobs\PruneOldPostsJob;
 
 class PostController extends Controller
 {
@@ -26,6 +27,12 @@ class PostController extends Controller
     public function userPosts()
     {
         return view('profile', ['user' => Auth::user()]);
+    }
+
+    public function pruneOldPosts()
+    {
+        dispatch(new PruneOldPostsJob);
+        return view('index', ['posts' => Post::all()]);
     }
 
     public function create()
