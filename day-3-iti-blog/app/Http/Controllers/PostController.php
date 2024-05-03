@@ -72,4 +72,24 @@ class PostController extends Controller
         $post->delete();
         return to_route('posts.index');
     }
+
+    public function indexDeletedPosts()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view("indexDeletedPosts", compact('posts'));
+    }
+
+    public function deletePermanent($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->forceDelete();
+        return to_route('posts.deleted');
+    }
+
+    public function restoreDeleted($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+        return to_route('posts.deleted');
+    }
 }
