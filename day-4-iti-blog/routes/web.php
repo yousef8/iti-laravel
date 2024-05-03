@@ -3,9 +3,14 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/deleted', [PostController::class, 'indexDeletedPosts'])->name('posts.deleted');
 Route::delete('/posts/deleted/permanent/{id}', [PostController::class, 'deletePermanent'])->name('posts.permanent');
