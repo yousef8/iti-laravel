@@ -21,26 +21,14 @@ class PostController extends Controller
         return view('create', ['users' => User::all()]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $validatedData = $request->validate(
-            [
-                'title' => 'required|string|max:255',
-                'body' => 'required|string',
-                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-                'user_id' => 'required|string|exists:users,id'
-            ],
-            [
-                'user_id.exists' => "This author doesn't exist"
-            ]
-        );
+        $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
             $validatedData['image'] = '/storage/' . $request->file('image')->store('images', 'public');
         }
-        $post = User::find($request['user_id'])
-            ->posts()
-            ->create($validatedData);
+        $post = Post::create($validatedData);
 
         return to_route('posts.show', $post->id);
     }
