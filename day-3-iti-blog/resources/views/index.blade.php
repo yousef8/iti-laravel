@@ -11,6 +11,8 @@
       <th scope="col">ID</th>
       <th scope="col">Title</th>
       <th scope="col">Body</th>
+      <th scope="col">Creator</th>
+      <th scope="col">Created At</th>
       <th scope="col">Image</th>
       <th scope="col">Actions</th>
     </tr>
@@ -21,6 +23,8 @@
       <th scope="row">{{$post->id}}</th>
       <td>{{$post->title}}</td>
       <td>{{$post->body}}</td>
+      <td>{{$post->creator->name}}</td>
+      <td>{{$post->created_at->toDayDateTimeString()}}</td>
       <td>{{$post->image}}</td>
       <td><a href="{{route('posts.show', $post->id)}}"><x-button>View</x-button></a></td>
       <td><a href="{{route('posts.edit', $post->id)}}"><x-button type='warning'>Edit</x-button></a></td>
